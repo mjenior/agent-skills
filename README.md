@@ -8,7 +8,7 @@ This repository collects reusable:
 - skill files with trigger metadata and operating instructions,
 - system prompt text for a direct, verification-first coding agent.
 
-The content is oriented toward code review, debugging, planning, documentation sync, prompt auditing, agent-readiness analysis, deep research, teaching workspaces, and repository workflow execution. Most files are written as operational instructions for an agent working in a real repository with access to code, tests, diffs, and shell tools.
+The content is oriented toward code review, debugging, planning, documentation sync, prompt auditing, agent-readiness analysis, deep research, benchmark generation, teaching workspaces, and repository workflow execution. Most files are written as operational instructions for an agent working in a real repository with access to code, tests, diffs, and shell tools.
 
 ## repository layout
 
@@ -73,8 +73,9 @@ System prompt text that defines the baseline agent behavior.
 
 ### `workflows/`
 
-End-to-end operating procedures that combine commands, skills, subagents, verification, git triage, and PR creation into one larger workflow.
+End-to-end operating procedures that combine commands, skills, subagents, and verification into one larger workflow/loop.
 
+- `tester.md` - multi-agent benchmark generation workflow that analyzes a knowledge corpus, builds a distribution matrix, assigns parallel question-generation batches, and validates adversarial JSON evaluation items
 - `unvibe.md` - standalone automated audit-to-PR loop for broad simplification review, planning, plan review, implementation, confirmation, final audit, commit, push, and PR creation
 
 ## what kind of content lives here
@@ -100,6 +101,7 @@ A large portion of the library is aimed at software delivery tasks such as:
 - generating reviewer-facing summaries
 - handing off conversation state to a fresh agent without duplicating existing artifacts
 - building source-verified research briefs from parallel discovery, evidence extraction, and synthesis
+- generating corpus-grounded benchmark datasets with adversarial evaluation items
 - building stateful teaching workspaces with lessons, references, resources, and learning records
 - completing branch-to-MR workflows
 
