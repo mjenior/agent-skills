@@ -67,6 +67,12 @@ System prompt text that defines the baseline agent behavior.
 
 - `judge.md` - an LLM response-evaluation policy that scores a `TEST_RESPONSE` against an `INITIAL_PROMPT` and `REFERENCE_RESPONSE`, then returns strict JSON with per-criterion scores, a rounded composite score, and a one-paragraph review summary
 
+### `workflows/`
+
+End-to-end operating procedures that combine commands, skills, subagents, verification, git triage, and PR creation into one larger workflow.
+
+- `unvibe.md` - standalone automated audit-to-PR loop for broad simplification review, planning, plan review, implementation, confirmation, final audit, commit, push, and PR creation
+
 ## what kind of content lives here
 
 This is not a general prompt dump. The repository content is opinionated and procedural.
