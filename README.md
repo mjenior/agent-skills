@@ -59,7 +59,7 @@ Current skills:
 - `repo-explorer.md` - external repository cloning and inspection using a reusable local cache
 - `test_audit.md` - test-suite audit for coverage quality and isolation
 
-### `system/`
+### `agents/`
 
 System prompt text that defines the baseline agent behavior.
 
