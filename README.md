@@ -2,9 +2,9 @@
 
 This is my public prompt library for use across LLM harness platforms. 
 
-Many are my own creations, but a few are adapted or refactore from versions in a variety of different sources:
+Many are my own creations, but a few are adapted or refactored from versions in a variety of different sources:
 
-- [teach](https://github.com/mattpocock)
+- [teach & handoff](https://github.com/mattpocock)
 - [repo-explorer](https://github.com/t3dotgg)
 
 The content is oriented toward code review, debugging, planning, documentation sync, response style control, prompt auditing, agent-readiness analysis, deep research, benchmark generation, teaching workspaces, and repository workflow execution. Most files are written as operational instructions for an agent working in a real repository with access to code, tests, diffs, and shell tools.
@@ -24,7 +24,6 @@ Plain Markdown prompts intended for explicit command-style invocation. These are
 - `investigate.md` - root-cause investigation from workflow errors and intermediate output
 - `prompts.md` - audit of prompts, agent instructions, and model-facing text against actual behavior
 - `test_audit.md` - test-suite audit for behavior coverage, reachability, isolation, and maintainability
-- `unvibe.md` - broad simplification audit for duplication, dead code, conflicting logic, and low-value complexity
 
 #### planning and implementation workflow
 
@@ -57,12 +56,9 @@ Current skills:
 - `fit.md` - plan-fit review against the existing codebase
 - `humanize.md` - natural, concise, human-sounding user-facing prose for non-trivial responses
 - `investigate.md` - workflow failure diagnosis from supplied evidence
-- `plan.md` - implementation plan generation from confirmed findings
-- `prompts.md` - prompt and instruction audit against repository behavior
 - `repo-explorer.md` - external repository cloning and inspection using a reusable local cache
 - `research/` - deep research workflow skill for goal-setting, parallel source discovery, source verification, claim extraction, skeptic review, and synthesis
 - `teach/` - stateful teaching workspace skill for creating mission-grounded lessons, learning records, reference documents, resources, and reusable lesson assets
-- `test_audit.md` - test-suite audit for coverage quality and isolation
 
 ### `agents/`
 
