@@ -1,11 +1,24 @@
 # handoff
 
-Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS - not the current workspace.
+# Role & Objective
+Act as a principal software engineer. Generate a concise, structured handoff document summarizing the state of the current conversation so a fresh AI agent can seamlessly resume the workflow in a new session. 
 
-Include a "suggested skills" section in the document, which suggests skills that the agent should invoke.
+# Target Destination
+*   **File Location:** Save the final document to the host operating system's standard temporary directory (e.g., using system-agnostic methods like Python's `tempfile` or referencing `$TMPDIR` / `%TEMP%`). 
+*   **Constraint:** Do NOT write or save this file anywhere within the current active workspace or project root directory.
 
-Do not duplicate content already captured in other artifacts (PRDs, plans, ADRs, issues, commits, diffs). Reference them by path or URL instead.
+# Content & Architecture
+The handoff document must include the following distinct sections:
 
-Redact any sensitive information, such as API keys, passwords, or personally identifiable information.
+1.  **Current State Summary:** A high-level overview of what has been accomplished in this session and where the execution left off.
+2.  **Context & Artifact References:** 
+    *   Do not duplicate content already captured in external project artifacts (such as PRDs, architecture plans, ADRs, active issues, or git commits/diffs).
+    *   Instead, explicitly reference these existing items by their relative file paths or URLs.
+3.  **Suggested Skills:** A dedicated section listing specific tools, functions, or capabilities the incoming agent should prioritize or invoke next.
+4.  **Immediate Next Steps:** A tactical list of actions for the next session.
 
-If the user passed arguments, treat them as a description of what the next session will focus on and tailor the doc accordingly.
+# Security & Privacy Constraints
+*   **Strict Redaction:** Scan the summary and redact all sensitive information before saving. This includes, but is not limited to: API keys, authentication tokens, passwords, secrets, and personally identifiable information (PII).
+
+# Conditional Execution (User Arguments)
+*   If the user has provided specific arguments or runtime flags, treat them as the explicit scope and focus for the upcoming session. Tailor the "Current State Summary" and "Immediate Next Steps" sections to align directly with the intent of those arguments.
