@@ -4,7 +4,7 @@ This is my public prompt library for use across LLM harness platforms.
 
 The content is oriented toward code review, debugging, planning, documentation sync, response style control, prompt auditing, agent-readiness analysis, deep research, benchmark generation, teaching workspaces, repository workflow execution, and copy-paste prompts for web tools. Most files are written as operational instructions for an agent working in a real repository with access to code, tests, diffs, and shell tools.
 
-Many are my own creations, but a few are adapted or refactored from versions in a variety of different sources:
+Many are my own creations, but a few are adapted or refactored from a couple different sources:
 
 - [/teach & /handoff](https://github.com/mattpocock)
 - [/repo-explorer](https://github.com/t3dotgg)
