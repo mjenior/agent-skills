@@ -1,0 +1,177 @@
+# Obsidian Knowledge Base Workflow
+
+Use this workflow to create, update, parse, or audit an Obsidian-compatible local knowledge base from user-provided technical/scientific documents, non-technical documents, and code collections. The coordinator owns all phase gates. Subagents are bounded workers; their outputs are advisory until the coordinator verifies them against source material, vault conventions, and Obsidian compatibility rules.
+
+## Objectives
+
+- Convert varied source material into a coherent Obsidian vault with shallow folders, unique filenames, stable WikiLinks, strict YAML frontmatter, and centralized attachments.
+- Preserve provenance from source documents, code paths, pages, sections, line ranges, commits, or other locators.
+- Split long or complex sources into durable evergreen notes rather than source-shaped summaries.
+- Maintain a graph that is readable for humans and predictable for LLMs: clear note titles, explicit aliases, consistent tags, backlinks, and short concept notes.
+- Audit and repair Obsidian-specific risks: duplicate filenames, invalid YAML, broken WikiLinks, orphaned attachments, inconsistent tags, deep nesting, and indexer-heavy folders.
+
+## Obsidian compatibility rules
+
+1. Keep the vault as standard local Markdown files and attachments.
+2. Prefer WikiLinks for internal links: `[[Note Title]]` or `[[Note Title|display text]]`.
+3. Use unique note filenames across the entire vault. Avoid duplicate names such as `Index.md` in multiple folders.
+4. Use cross-platform-safe filenames: letters, numbers, spaces, hyphens, and underscores. Avoid `/`, `:`, `\\`, control characters, and other OS-hostile punctuation.
+5. Keep folder depth shallow. Default to top-level domain folders under `20_Permanent/` only when they improve human navigation.
+6. Put attachments in `00_Meta/Attachments/` unless an existing vault convention says otherwise.
+7. Put frontmatter first, bounded by `---` lines.
+8. In frontmatter, use arrays for `aliases`, `tags`, `sources`, and `related`. Do not prefix frontmatter tags with `#`.
+9. Quote YAML strings that contain colons, brackets, braces, hashes, dates that should remain strings, or other special characters.
+10. Do not store large generated folders, dependency directories, datasets, or code repositories as indexed knowledge notes. If they must remain in the vault, mark them as Obsidian indexer exclusions in the manifest or audit.
+
+## Model and thinking tiers
+
+Use the smallest tier that can satisfy the phase gate.
+
+| tier | use when | model | thinking | max task size |
+| --- | --- | --- | --- | --- |
+| quick | Mechanical vault checks, filename normalization proposals, duplicate detection, link checks, attachment inventory, simple non-technical extraction. | GPT-5.5 or Claude Haiku-4.5 | low | 10-40 files or less than 20 minutes |
+| standard | Mixed document ingestion, ordinary technical notes, source registers, note merging, metadata normalization, moderate code walkthroughs. | GPT-5.5 or Claude Sonnet-4.6 | medium | One source cluster, 5-15 documents, or 3-8 related code files |
+| complex | Dense scientific papers, specifications, mathematical material, large architecture documents, ambiguous terminology, cross-document synthesis, or codebases with many entry points. | GPT-5.5 or Claude Opus-4.8 | high | One complex source, one subsystem, or any high-risk synthesis task |
+| verifier | Independent audit of note quality, link integrity, frontmatter validity, source-grounding, merge decisions, and Obsidian compatibility. | GPT-5.5 or Claude Sonnet-4.6; use Claude Opus-4.8 for complex source-grounding review | medium by default, high for complex tier changes | Bounded to changed notes, source cluster, or vault audit |
+
+## Subagent roles
+
+- **Coordinator**: Owns vault scoping, conventions, phase gates, note taxonomy, source register, integration, and final validation. Use GPT-5.5 or Claude Opus-4.8 with high thinking for large or highly technical vault builds; use GPT-5.5 or Claude Sonnet-4.6 with medium thinking otherwise.
+- **Vault cartographer**: Inspects existing folder structure, `.obsidian/` settings when present, filename conventions, templates, frontmatter patterns, tags, attachments, and link style. Use GPT-5.5 or Claude Sonnet-4.6 with medium thinking; use GPT-5.5 or Claude Haiku-4.5 with low thinking for small vault inventories.
+- **Source inventory scouts**: Catalog user-provided documents and code by type, size, complexity, provenance, and processing priority. Use GPT-5.5 or Claude Haiku-4.5 with low thinking for simple inventories; use GPT-5.5 or Claude Sonnet-4.6 with medium thinking for mixed or messy collections.
+- **Document extractors**: Extract concepts, claims, definitions, procedures, entities, limitations, and relationships from documents. Use GPT-5.5 or Claude Sonnet-4.6 with medium thinking; use GPT-5.5 or Claude Opus-4.8 with high thinking for scientific, mathematical, legal, medical, or high-density technical material.
+- **Code extractors**: Trace entry points, architecture, APIs, data models, configuration, tests, and operational workflows from code. Use GPT-5.5 or Claude Sonnet-4.6 with medium thinking; use GPT-5.5 or Claude Opus-4.8 with high thinking for large subsystems, dynamic dispatch, generated code, or cross-language projects.
+- **Note composers**: Convert verified extractions into Obsidian notes following [NOTE-FORMAT.md](./NOTE-FORMAT.md). Use GPT-5.5 or Claude Sonnet-4.6 with medium thinking; use GPT-5.5 or Claude Haiku-4.5 with low thinking only for mechanical formatting from already verified extracts.
+- **Vault verifier**: Checks final notes for broken links, duplicate filenames, malformed YAML, inconsistent tags, missing provenance, attachment issues, and excessive note length. Use GPT-5.5 or Claude Sonnet-4.6 with medium thinking; escalate to GPT-5.5 or Claude Opus-4.8 with high thinking when verifying dense source-grounding.
+
+## Parallelization defaults
+
+- Do not use subagents for fewer than 10 short files or a small single-topic update where coordination costs exceed direct work.
+- Use 2-4 source inventory scouts for 25-100 mixed files. Use up to 6 only when files split cleanly by document type, domain, project, or source folder.
+- For one very large file, split by sections, chapters, headings, page ranges, or code regions. Use 2-4 extractors for complex documents; use 1 extractor when the document is short or highly sequential.
+- For many smaller files, batch by source type and domain: scientific papers, manuals, meeting notes, policy documents, README/docs, source code, tests, configuration, and data schemas.
+- Assign code extractors by subsystem or entry-point boundary, not by arbitrary file count.
+- Keep note taxonomy, filename selection, merge decisions, and final link integration coordinator-owned to prevent duplicate concepts and inconsistent aliases.
+- Run verifier subagents after composition, not in parallel with note writers that are still changing the same files.
+- Never let parallel subagents write to the same note or source register section. They return bounded extraction output; the coordinator integrates.
+
+## Phase gates
+
+| phase | gate |
+| --- | --- |
+| vault scope | Vault root, creation/update mode, source locations, and modification permissions are known or explicitly assumed. |
+| vault conventions | `00_Meta/VAULT-MANIFEST.md` exists or current conventions are recorded before new notes are written. |
+| source inventory | `00_Meta/Sources/SOURCE-REGISTER.md` lists source IDs, types, locations, sizes, complexity, and processing status. |
+| extraction | Extracted claims, concepts, code facts, and relationships cite source IDs and precise locators where available. |
+| note planning | Proposed notes have unique filenames, target folders, aliases, tags, source IDs, and merge/update decisions. |
+| composition | Notes follow [NOTE-FORMAT.md](./NOTE-FORMAT.md), use Obsidian WikiLinks, and include provenance. |
+| vault validation | Links, filenames, frontmatter, tags, attachments, nesting depth, and indexer risks have been checked and recorded in `00_Meta/VAULT-AUDIT.md` when useful. |
+
+## Workflow loop
+
+### 0. Scope the vault and source collection
+
+1. Identify whether the user wants to create a new vault, update an existing vault, parse an existing vault, or audit/repair Obsidian compatibility.
+2. Identify the vault root and source locations. Sources may be PDFs, Markdown, text files, office documents converted to text, code repositories, API docs, notebooks, diagrams, meeting notes, or mixed folders.
+3. Inspect current vault conventions before writing. Check folder names, note naming, templates, frontmatter fields, aliases, tags, link style, attachment location, and `.obsidian/` settings when available.
+4. Ask one focused question only if the wrong assumption could cause overwritten notes, misplaced sources, incompatible link style, or a substantially different note granularity.
+5. Write or update `00_Meta/VAULT-MANIFEST.md` using [VAULT-MANIFEST-FORMAT.md](./VAULT-MANIFEST-FORMAT.md).
+
+### 1. Inventory sources
+
+1. Assign each source a stable source ID.
+2. Record path, type, size, language, domain, author or origin when known, date/version when known, and access limitations.
+3. Classify processing complexity:
+   - `simple`: short non-technical or single-topic files;
+   - `standard`: moderate technical or mixed-domain files;
+   - `complex`: dense scientific, mathematical, legal, medical, code-heavy, or cross-referenced files;
+   - `huge`: files too large for one reliable pass and requiring sectioned extraction.
+4. Identify source clusters that should be processed together because they share terminology, provenance, or code boundaries.
+5. Update `00_Meta/Sources/SOURCE-REGISTER.md` using [SOURCE-REGISTER-FORMAT.md](./SOURCE-REGISTER-FORMAT.md).
+
+### 2. Plan the note graph
+
+1. Choose note granularity by concept, not by source file. A single source can yield many notes; several sources can update one concept note.
+2. Prefer permanent notes for durable concepts, workflows, APIs, entities, algorithms, experimental findings, architecture decisions, and recurring terminology.
+3. Keep project-specific execution notes in `30_Projects/` and temporary import notes in `10_Fleeting/`.
+4. Define canonical note titles before writing. Titles should be unique, descriptive, and stable.
+5. Define aliases for acronyms, synonyms, old names, paper-specific terms, and code symbols that users or agents may search for later.
+6. Define tags sparingly. Use tags for broad retrieval facets, not as a replacement for links.
+7. Decide merge vs create:
+   - merge when an existing note covers the same concept and the new source adds evidence, nuance, or updated behavior;
+   - create when the concept is distinct, the existing title would become overloaded, or source terminology needs a separate bridge note.
+
+### 3. Extract source facts
+
+1. Read source material directly. Do not infer technical claims from filenames, abstracts, tables of contents, or code names alone.
+2. For scientific and technical documents, extract:
+   - problem statement and motivation;
+   - definitions and notation;
+   - method, architecture, algorithm, or protocol;
+   - assumptions and constraints;
+   - empirical setup, datasets, metrics, and results;
+   - limitations, failure modes, and open questions;
+   - relationships to existing notes.
+3. For non-technical documents, extract:
+   - people, organizations, goals, decisions, timelines, obligations, definitions, and action-relevant context;
+   - claims that affect interpretation of technical sources;
+   - contradictions or unresolved ambiguity.
+4. For code, extract:
+   - entry points and exported surfaces;
+   - module responsibilities;
+   - data models, schemas, configuration, environment variables, and persisted formats;
+   - runtime flows, state transitions, and integration boundaries;
+   - tests and examples that reveal intended behavior;
+   - stable symbols worth adding as aliases or backlinks.
+5. Record precise locators: section, heading, page, paragraph, line range, file path, function/class, commit, or test name.
+6. Mark uncertain or conflicting facts explicitly. Do not smooth contradictions into a false synthesis.
+
+### 4. Compose Obsidian notes
+
+1. Use [NOTE-FORMAT.md](./NOTE-FORMAT.md) for permanent notes.
+2. Put frontmatter first and keep it valid YAML.
+3. Use a concise opening definition or claim so the note is useful in preview and graph contexts.
+4. Link related concepts with WikiLinks on first meaningful mention.
+5. Add aliases for acronyms, alternate names, code symbols, and source-specific terminology.
+6. Keep notes focused. If a note grows beyond one concept or becomes difficult to scan, split it and link the parts.
+7. Prefer prose and compact tables over long pasted excerpts.
+8. Include short code snippets only when they explain an API, schema, invariant, or non-obvious mechanism. Cite the source path and line range.
+9. Add a `Source grounding` section for claims that may need verification later.
+10. Add `Open questions` only for material ambiguity that affects retrieval, interpretation, or future updates.
+
+### 5. Update and maintain existing notes
+
+1. Before creating a note, search for existing titles, aliases, and backlinks that cover the concept.
+2. Preserve existing user-written content unless it is clearly obsolete, contradicted by newer source evidence, or duplicated by a cleaner integrated note.
+3. When updating, add source-backed changes in place rather than appending disconnected summaries.
+4. Update aliases, tags, backlinks, and source lists with the same change.
+5. If two notes overlap, recommend a merge only when both note purposes are redundant. Otherwise add bridge links explaining the distinction.
+6. Record major convention changes in `00_Meta/VAULT-MANIFEST.md`.
+
+### 6. Validate the vault
+
+Run the narrowest available checks for the touched scope:
+
+1. Duplicate filenames across the vault.
+2. Invalid or missing frontmatter in permanent notes.
+3. Frontmatter tags containing `#`.
+4. Broken WikiLinks or links that resolve ambiguously.
+5. Missing aliases for common acronyms and source names.
+6. Orphan notes created by the workflow that should link into the graph.
+7. Attachments outside the configured attachments folder.
+8. Deeply nested folders beyond the vault convention.
+9. Large non-Markdown folders inside the vault that may slow the Obsidian indexer.
+10. Notes without source grounding when they contain technical, scientific, code, medical, legal, or factual claims.
+
+Record results in `00_Meta/VAULT-AUDIT.md` using [VAULT-AUDIT-FORMAT.md](./VAULT-AUDIT-FORMAT.md) when the task is more than a trivial edit.
+
+## Output to the user
+
+Return a concise summary with:
+
+- vault path;
+- source count processed;
+- notes created, updated, and skipped;
+- validation performed and results;
+- unresolved source gaps, broken links, merge candidates, or indexer risks;
+- paths to the manifest, source register, audit, and notable notes.

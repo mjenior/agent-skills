@@ -7,7 +7,7 @@ The content is oriented toward code review, debugging, planning, documentation s
 Many are my own creations, but a few are adapted or refactored from a couple different sources:
 
 - [teach & /handoff](https://github.com/mattpocock)
-- repo-explorer](https://github.com/t3dotgg)
+- [repo-explorer](https://github.com/t3dotgg)
 
 ## repository layout
 
@@ -62,6 +62,7 @@ Current skills:
 - `fit` - plan-fit review against the existing codebase
 - `humanize` - natural, concise, human-sounding user-facing prose for non-trivial responses
 - `investigate` - workflow failure diagnosis from supplied evidence
+- `obsidian` - Obsidian-compatible local knowledge-base construction, update, parsing, and validation from technical documents, non-technical documents, and code collections
 - `repo-explorer` - external repository cloning and inspection using a reusable local cache
 - `research` - deep research workflow skill for goal-setting, parallel source discovery, source verification, claim extraction, skeptic review, and synthesis
 - `teach` - stateful teaching workspace skill for creating mission-grounded lessons, learning records, reference documents, resources, and reusable lesson assets
@@ -78,14 +79,14 @@ System prompt text that defines the baseline agent behavior.
 
 End-to-end operating procedures for tasks that need more than a single command invocation. A workflow defines the objective, phase gates, subagent topology, model and thinking tiers, verification requirements, and stopping conditions for a long-running loop.
 
-Unlike commands, workflows do not just tell one agent how to perform a bounded action. They describe how a coordinator should split work across subagents, keep subagent outputs advisory until verified, sequence dependent phases, and decide when the overall objective is complete.
+Unlike basic slash-commands, workflows do not just tell one agent how to perform a bounded action. They describe how a coordinator should split work across subagents, keep subagent outputs advisory until verified, sequence dependent phases, and decide when the overall objective is complete.
 
 Current workflows:
 
-- `/kaplan`
+- `/create_test_dataset`
   - Objective: generate a corpus-grounded benchmark dataset with adversarial JSON evaluation items.
   - Subagent use: an orchestrator analyzes the source corpus, builds the distribution matrix, assigns parallel item-generation batches to worker subagents, then aggregates and validates the final dataset.
-- `/unvibe`
+- `/unvibe_code_repo`
   - Objective: convert a broad simplification audit into a reviewed, implemented, tested, committed, and PR-ready change.
   - Subagent use: a coordinator may use bounded audit scouts, plan reviewers, implementation workers, and confirmation reviewers, while retaining responsibility for evidence checks, integration decisions, verification, and branch operations.
 
@@ -113,6 +114,7 @@ A large portion of the library is aimed at software delivery tasks such as:
 - writing concise, natural user-facing responses without generic assistant artifacts
 - handing off conversation state to a fresh agent without duplicating existing artifacts
 - building source-verified research briefs from parallel discovery, evidence extraction, and synthesis
+- creating and maintaining Obsidian-compatible local knowledge bases from documents and code collections
 - generating corpus-grounded benchmark datasets with adversarial evaluation items
 - building stateful teaching workspaces with lessons, references, resources, and learning records
 - completing branch-to-MR workflows
