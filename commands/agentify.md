@@ -12,13 +12,13 @@ Your goal is to optimize the codebase for **Agent Readability and Generation Rel
 # Multi-Agent Execution Architecture
 To prevent context saturation and ensure deep analysis, this evaluation must be executed via the following multi-agent topology:
 
-1. **Lead Architect Agent (1x Instance | Frontier-Tier | Thinking Enabled: Max):** Receives the entire repository tree and high-level architecture. Orchestrates the subagents, synthesizes their localized findings, and generates the final Executive Summary and Scorecards.
-2. **Parallel Codebase Subagents (4x Instances | Frontier-Tier | Thinking Enabled: Medium):**
+1. **Lead Architect Agent (1x Instance | GPT-5.5 high thinking or Claude Opus-4.8 high thinking):** Receives the entire repository tree and high-level architecture. Orchestrates the subagents, synthesizes their localized findings, and generates the final Executive Summary and Scorecards.
+2. **Parallel Codebase Subagents (4x Instances | GPT-5.5 medium thinking or Claude Sonnet-4.6 medium thinking):**
    - **Agent A (Core & Domain):** Analyzes business logic, class hierarchies, state management, and module coupling.
    - **Agent B (Data, APIs, & Contracts):** Analyzes serialization, database abstractions, event/message systems, and API layers.
    - **Agent C (Infrastructure & Lifecycle):** Analyzes configuration systems, build tooling, dependency injection, dynamic imports, and CI/CD pipelines.
    - **Agent D (Verification & Testing):** Analyzes test architecture, test discoverability, mock boundaries, and type safety coverage.
-3. **Quant & Synthesis Subagent (1x Instance | Frontier-Tier):** Ingests raw findings from Agents A-D to compute the Refactor Prioritization Matrix, ROI metrics, and Before/After structural schemas.
+3. **Quant & Synthesis Subagent (1x Instance | GPT-5.5 high thinking or Claude Opus-4.8 high thinking):** Ingests raw findings from Agents A-D to compute the Refactor Prioritization Matrix, ROI metrics, and Before/After structural schemas.
 
 ---
 

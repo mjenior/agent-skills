@@ -11,13 +11,13 @@ You manage a fleet of specialized Generation Subagents to distribute the workloa
 To successfully execute this benchmark without quality degradation or truncation, you will use the following execution topology:
 
 ### 1. Tier 1: Orchestrator & Analyst Agent
-* **Model Class:** Frontier Intelligence Model (e.g., GPT-4o, Claude 3.5 Sonnet)
-* **Thinking/Reasoning Profile:** High-reasoning/Long-thought enabled.
+* **Model Class:** GPT-5.5 with high thinking, or Claude Opus-4.8 with high thinking.
+* **Thinking/Reasoning Profile:** High reasoning.
 * **Primary Duty:** Execute Phase 1 & 2. Generate a strict distribution matrix. Step-by-step, assign batches to Tier 2 agents. Aggregate and validate final outputs.
 
 ### 2. Tier 2: Item Generation Subagents (Parallel Workers)
-* **Model Class:** High-Throughput / Cost-Effective Frontier Model (e.g., GPT-4o-mini, Claude 3.5 Haiku)
-* **Thinking/Reasoning Profile:** Standard, fast inference.
+* **Model Class:** GPT-5.5 with low thinking, or Claude Haiku-4.5 with low thinking.
+* **Thinking/Reasoning Profile:** Fast inference.
 * **Parallel Workers:** 5 to 10 concurrent virtual instances.
 * **Primary Duty:** Consume a targeted item specification from the Orchestrator and output exactly 10–15 high-quality questions per batch according to a strict JSON schema.
 

@@ -6,8 +6,8 @@ The content is oriented toward code review, debugging, planning, documentation s
 
 Many are my own creations, but a few are adapted or refactored from a couple different sources:
 
-- [/teach & /handoff](https://github.com/mattpocock)
-- [/repo-explorer](https://github.com/t3dotgg)
+- [teach & /handoff](https://github.com/mattpocock)
+- repo-explorer](https://github.com/t3dotgg)
 
 ## repository layout
 
@@ -49,11 +49,11 @@ Plain Markdown prompts intended for explicit slash command-style invocation. The
 
 Copy-paste prompts intended for associated web page tools rather than slash-command or skill invocation.
 
-- `notebook_lm.md` - NotebookLM audio overview prompt for neutral, structured, technically precise summaries of machine learning, AI architecture, and computational research papers
+- `notebook_lm` - NotebookLM audio overview prompt for neutral, structured, technically precise summaries of machine learning, AI architecture, and computational research papers
 
 ### `skills/`
 
-Skill files in the same general style as the existing `repo-explorer` skill: front matter plus operational instructions. These are meant for harnesses that support reusable skills selected from natural-language intent rather than explicit slash commands.
+These are meant for harnesses that support reusable skills selected from natural-language intent rather than explicit slash commands.
 
 Current skills:
 
@@ -76,10 +76,18 @@ System prompt text that defines the baseline agent behavior.
 
 ### `workflows/`
 
-End-to-end operating procedures that combine commands, skills, subagents, and verification into one larger workflow/loop.
+End-to-end operating procedures for tasks that need more than a single command invocation. A workflow defines the objective, phase gates, subagent topology, model and thinking tiers, verification requirements, and stopping conditions for a long-running loop.
 
-- `/kaplan` - multi-agent benchmark generation workflow that analyzes a knowledge corpus, builds a distribution matrix, assigns parallel question-generation batches, and validates adversarial JSON evaluation items
-- `/unvibe` - standalone automated audit-to-PR loop for broad simplification review, planning, plan review, implementation, confirmation, final audit, commit, push, and PR creation
+Unlike commands, workflows do not just tell one agent how to perform a bounded action. They describe how a coordinator should split work across subagents, keep subagent outputs advisory until verified, sequence dependent phases, and decide when the overall objective is complete.
+
+Current workflows:
+
+- `/kaplan`
+  - Objective: generate a corpus-grounded benchmark dataset with adversarial JSON evaluation items.
+  - Subagent use: an orchestrator analyzes the source corpus, builds the distribution matrix, assigns parallel item-generation batches to worker subagents, then aggregates and validates the final dataset.
+- `/unvibe`
+  - Objective: convert a broad simplification audit into a reviewed, implemented, tested, committed, and PR-ready change.
+  - Subagent use: a coordinator may use bounded audit scouts, plan reviewers, implementation workers, and confirmation reviewers, while retaining responsibility for evidence checks, integration decisions, verification, and branch operations.
 
 ## what kind of content lives here
 

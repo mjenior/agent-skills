@@ -48,19 +48,19 @@ Use the smallest model tier that can reliably complete the assigned phase. Escal
 
 | tier | use when | model | thinking | max task size |
 | --- | --- | --- | --- | --- |
-| quick | Single-file or narrow local inspection, no public contracts, no data shape changes, no ambiguous reachability. | Fast coding model | low | 1-3 files or less than 30 minutes expected work |
-| standard | Multiple related files, shared helpers, tests, or caller updates with clear ownership. | Strong coding model | medium | 4-12 files or 30-120 minutes expected work |
-| complex | Boundary contracts, public APIs, schemas, migrations, security, concurrency, generated code, framework discovery, or unclear reachability. | Strongest available coding model | high | More than 12 files, more than 2 hours expected work, or any high-risk boundary |
-| verifier | Independent review, plan critique, audit confirmation, or failure diagnosis. | Strong reasoning model | medium by default, high for complex tier changes | Bounded to the reviewed artifact or diff |
+| quick | Single-file or narrow local inspection, no public contracts, no data shape changes, no ambiguous reachability. | GPT-5.5 or Claude Haiku-4.5 | low | 1-3 files or less than 30 minutes expected work |
+| standard | Multiple related files, shared helpers, tests, or caller updates with clear ownership. | GPT-5.5 or Claude Sonnet-4.6 | medium | 4-12 files or 30-120 minutes expected work |
+| complex | Boundary contracts, public APIs, schemas, migrations, security, concurrency, generated code, framework discovery, or unclear reachability. | GPT-5.5 or Claude Opus-4.8 | high | More than 12 files, more than 2 hours expected work, or any high-risk boundary |
+| verifier | Independent review, plan critique, audit confirmation, or failure diagnosis. | GPT-5.5 or Claude Sonnet-4.6; use Claude Opus-4.8 for complex-tier review | medium by default, high for complex tier changes | Bounded to the reviewed artifact or diff |
 
 Subagent defaults:
 
-- Audit scouts: standard model, medium thinking. Use complex tier for large module maps, dynamic dispatch, framework conventions, public APIs, schemas, persistence, or security-sensitive areas.
-- Plan writer: strongest available coding model, high thinking for complex findings, medium otherwise.
-- Plan reviewer: verifier model, medium thinking. Use at most one reviewer unless the repository is so large that independent domain review is needed.
-- Implementation workers: standard model, medium thinking for isolated work packages. Use complex tier only for boundary contracts or cross-cutting refactors.
-- Test and confirmation reviewers: verifier model, medium thinking. Escalate to high thinking when failures contradict the plan or expose hidden contracts.
-- Commit and PR helper: quick model, low thinking when the diff and validation are already complete.
+- Audit scouts: GPT-5.5 or Claude Sonnet-4.6 with medium thinking. Use GPT-5.5 or Claude Opus-4.8 with high thinking for large module maps, dynamic dispatch, framework conventions, public APIs, schemas, persistence, or security-sensitive areas.
+- Plan writer: GPT-5.5 or Claude Opus-4.8 with high thinking for complex findings; GPT-5.5 or Claude Sonnet-4.6 with medium thinking otherwise.
+- Plan reviewer: GPT-5.5 or Claude Sonnet-4.6 with medium thinking. Use at most one reviewer unless the repository is so large that independent domain review is needed.
+- Implementation workers: GPT-5.5 or Claude Sonnet-4.6 with medium thinking for isolated work packages. Use GPT-5.5 or Claude Opus-4.8 with high thinking only for boundary contracts or cross-cutting refactors.
+- Test and confirmation reviewers: GPT-5.5 or Claude Sonnet-4.6 with medium thinking. Escalate to GPT-5.5 or Claude Opus-4.8 with high thinking when failures contradict the plan or expose hidden contracts.
+- Commit and PR helper: GPT-5.5 or Claude Haiku-4.5 with low thinking when the diff and validation are already complete.
 
 Parallelization defaults:
 

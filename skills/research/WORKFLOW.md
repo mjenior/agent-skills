@@ -17,21 +17,21 @@ Use the smallest tier that can satisfy the phase gate.
 
 | tier | use when | model | thinking | max task size |
 | --- | --- | --- | --- | --- |
-| quick | Link checks, metadata verification, duplicate detection, mechanical register updates. | Fast model | low | 5-15 sources or less than 20 minutes |
-| standard | Focused source discovery, source quality assessment, claim extraction from clear sources. | Strong model | medium | One research facet or 3-5 sources |
-| complex | Ambiguous domains, specialized technical or academic material, conflicting evidence, legal, medical, financial, policy, security, or scientific claims. | Strongest available model | high | Any high-risk or expert-level facet |
-| skeptic | Challenge the goal, source strategy, evidence quality, contradictions, and synthesis. | Strong reasoning model | high | Bounded to the current artifact set |
-| synthesis | Integrate extracted evidence into a final answer with uncertainty and traceability. | Strongest available model | high | Full verified evidence set |
+| quick | Link checks, metadata verification, duplicate detection, mechanical register updates. | GPT-5.5 or Claude Haiku-4.5 | low | 5-15 sources or less than 20 minutes |
+| standard | Focused source discovery, source quality assessment, claim extraction from clear sources. | GPT-5.5 or Claude Sonnet-4.6 | medium | One research facet or 3-5 sources |
+| complex | Ambiguous domains, specialized technical or academic material, conflicting evidence, legal, medical, financial, policy, security, or scientific claims. | GPT-5.5 or Claude Opus-4.8 | high | Any high-risk or expert-level facet |
+| skeptic | Challenge the goal, source strategy, evidence quality, contradictions, and synthesis. | GPT-5.5 or Claude Opus-4.8 | high | Bounded to the current artifact set |
+| synthesis | Integrate extracted evidence into a final answer with uncertainty and traceability. | GPT-5.5 or Claude Opus-4.8 | high | Full verified evidence set |
 
 ## Subagent roles
 
-- **Coordinator**: Owns the research goal, phase gates, source register, claims matrix, synthesis, and final quality. Strongest available model, high thinking for complex topics, medium otherwise.
-- **Goal reviewer**: Optional verifier for unclear or high-stakes goals. Challenges whether the goal, audience, depth, exclusions, and stopping criteria are concrete enough. Skeptic tier, medium to high thinking.
-- **Resource scouts**: Find candidate sources from distinct facets, source types, regions, schools of thought, or time periods. Standard tier, medium thinking; complex tier for specialized domains.
-- **Existence verifiers**: Confirm each candidate source exists, is reachable or otherwise identifiable, and has enough metadata for citation. Quick tier, low thinking unless provenance is ambiguous.
-- **Evidence extractors**: Read verified sources and extract only goal-relevant claims into the claims matrix. Standard tier, medium thinking; complex tier for dense academic, legal, technical, or contradictory sources.
-- **Skeptic**: Challenges current conclusions, source mix, search directions, evidence gaps, and hallucination risk. Skeptic tier, high thinking. Deploy after goal setting, after source verification for complex topics, and after preliminary synthesis.
-- **Synthesis writer**: Produces the final research brief from the claims matrix and source register. Synthesis tier, high thinking.
+- **Coordinator**: Owns the research goal, phase gates, source register, claims matrix, synthesis, and final quality. Use GPT-5.5 or Claude Opus-4.8 with high thinking for complex topics; use GPT-5.5 or Claude Sonnet-4.6 with medium thinking otherwise.
+- **Goal reviewer**: Optional verifier for unclear or high-stakes goals. Challenges whether the goal, audience, depth, exclusions, and stopping criteria are concrete enough. Use GPT-5.5 or Claude Sonnet-4.6 with medium thinking, escalating to GPT-5.5 or Claude Opus-4.8 with high thinking for high-stakes goals.
+- **Resource scouts**: Find candidate sources from distinct facets, source types, regions, schools of thought, or time periods. Use GPT-5.5 or Claude Sonnet-4.6 with medium thinking; use GPT-5.5 or Claude Opus-4.8 with high thinking for specialized domains.
+- **Existence verifiers**: Confirm each candidate source exists, is reachable or otherwise identifiable, and has enough metadata for citation. Use GPT-5.5 or Claude Haiku-4.5 with low thinking unless provenance is ambiguous.
+- **Evidence extractors**: Read verified sources and extract only goal-relevant claims into the claims matrix. Use GPT-5.5 or Claude Sonnet-4.6 with medium thinking; use GPT-5.5 or Claude Opus-4.8 with high thinking for dense academic, legal, technical, or contradictory sources.
+- **Skeptic**: Challenges current conclusions, source mix, search directions, evidence gaps, and hallucination risk. Use GPT-5.5 or Claude Opus-4.8 with high thinking. Deploy after goal setting, after source verification for complex topics, and after preliminary synthesis.
+- **Synthesis writer**: Produces the final research brief from the claims matrix and source register. Use GPT-5.5 or Claude Opus-4.8 with high thinking.
 
 ## Parallelization defaults
 
