@@ -23,7 +23,7 @@ updated: YYYY-MM-DD
 
 ## Source table
 
-| source id | title or path | type | complexity | status | produced notes |
+| source id | title or path | type | complexity | status | produced or updated notes |
 | --- | --- | --- | --- | --- | --- |
 | `SRC-0001` | `{title or relative path}` | `{paper | spec | docs | code | meeting-notes | book | dataset | image | other}` | `{simple | standard | complex | huge}` | `{queued | processing | processed | partial | skipped}` | `[[Note Title]]`, `[[Another Note]]` |
 
@@ -49,10 +49,10 @@ updated: YYYY-MM-DD
 - Excluded sections, files, or ranges:
   - {reason: irrelevant, generated, binary, dependency, duplicate, inaccessible}
 
-#### Key extracted concepts
+#### Produced or updated notes
 
-- `[[Concept Note]]`: {one-sentence contribution from this source}
-- `[[Another Concept]]`: {one-sentence contribution from this source}
+- `[[Concept Note]]`: {created | updated}; `{vault-relative path}`; {one-sentence contribution from this source}
+- `[[Another Concept]]`: {created | updated}; `{vault-relative path}`; {one-sentence contribution from this source}
 
 #### Claims or facts needing careful provenance
 
@@ -70,4 +70,4 @@ updated: YYYY-MM-DD
 - Assign source IDs before extraction begins.
 - Keep skipped and rejected sources in the register when listing them prevents duplicate future work.
 - Use precise locators wherever possible. For code, prefer file path plus symbol or line range.
-- Do not mark a source `processed` until every note created from it has source IDs in frontmatter and provenance in the body where needed.
+- Do not mark a source `processed` until every note created or updated from it is inside the target vault, has source IDs in frontmatter, appears in the produced or updated notes list, and includes provenance in the body where needed.

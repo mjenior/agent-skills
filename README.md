@@ -45,12 +45,6 @@ Plain Markdown prompts intended for explicit slash command-style invocation. The
 
 - `/yeet` - end-to-end repository workflow for preflight, triage, commit, push, and merge request creation
 
-### `prompts/`
-
-Copy-paste prompts intended for associated web page tools rather than slash-command or skill invocation.
-
-- `notebook_lm` - NotebookLM audio overview prompt for neutral, structured, technically precise summaries of machine learning, AI architecture, and computational research papers
-
 ### `skills/`
 
 These are meant for harnesses that support reusable skills selected from natural-language intent rather than explicit slash commands.
@@ -62,6 +56,7 @@ Current skills:
 - `fit` - plan-fit review against the existing codebase
 - `humanize` - natural, concise, human-sounding user-facing prose for non-trivial responses
 - `investigate` - workflow failure diagnosis from supplied evidence
+- `notes` - meeting synthesis and action extraction from a meeting recording plus personal `.txt` notes
 - `obsidian` - Obsidian-compatible local knowledge-base construction, update, parsing, and validation from technical documents, non-technical documents, and code collections
 - `repo-explorer` - external repository cloning and inspection using a reusable local cache
 - `research` - deep research workflow skill for goal-setting, parallel source discovery, source verification, claim extraction, skeptic review, and synthesis
@@ -113,12 +108,19 @@ A large portion of the library is aimed at software delivery tasks such as:
 - generating reviewer-facing summaries
 - writing concise, natural user-facing responses without generic assistant artifacts
 - handing off conversation state to a fresh agent without duplicating existing artifacts
+- synthesizing meeting recordings and personal notes into markdown summaries, decisions, action items, and follow-up requirements
 - building source-verified research briefs from parallel discovery, evidence extraction, and synthesis
 - creating and maintaining Obsidian-compatible local knowledge bases from documents and code collections
 - generating corpus-grounded benchmark datasets with adversarial evaluation items
 - building stateful teaching workspaces with lessons, references, resources, and learning records
 - completing branch-to-MR workflows
 - adapting web-page tools with reusable copy-paste prompts
+
+### `prompts/`
+
+Copy-paste prompts intended for associated web page tools rather than slash-command or skill invocation.
+
+- `notebook_lm` - NotebookLM audio overview prompt for neutral, structured, technically precise summaries of machine learning, AI architecture, and computational research papers
 
 ## how to use this repo
 

@@ -5,6 +5,7 @@ Use this workflow to create, update, parse, or audit an Obsidian-compatible loca
 ## Objectives
 
 - Convert varied source material into a coherent Obsidian vault with shallow folders, unique filenames, stable WikiLinks, strict YAML frontmatter, and centralized attachments.
+- When the user provides a target vault or knowledge base, create or update the output notes inside that vault and connect them to the existing graph rather than returning detached markdown artifacts.
 - Preserve provenance from source documents, code paths, pages, sections, line ranges, commits, or other locators.
 - Split long or complex sources into durable evergreen notes rather than source-shaped summaries.
 - Maintain a graph that is readable for humans and predictable for LLMs: clear note titles, explicit aliases, consistent tags, backlinks, and short concept notes.
@@ -63,8 +64,9 @@ Use the smallest tier that can satisfy the phase gate.
 | vault conventions | `00_Meta/VAULT-MANIFEST.md` exists or current conventions are recorded before new notes are written. |
 | source inventory | `00_Meta/Sources/SOURCE-REGISTER.md` lists source IDs, types, locations, sizes, complexity, and processing status. |
 | extraction | Extracted claims, concepts, code facts, and relationships cite source IDs and precise locators where available. |
-| note planning | Proposed notes have unique filenames, target folders, aliases, tags, source IDs, and merge/update decisions. |
-| composition | Notes follow [NOTE-FORMAT.md](./NOTE-FORMAT.md), use Obsidian WikiLinks, and include provenance. |
+| note planning | Proposed notes have unique filenames, target folders inside the vault, aliases, tags, source IDs, graph entry points, and merge/update decisions. |
+| composition | Notes follow [NOTE-FORMAT.md](./NOTE-FORMAT.md), use Obsidian WikiLinks, include provenance, and are written to vault-relative paths. |
+| integration | New and updated notes are referenced from relevant index, project, source, or related concept notes, and `SOURCE-REGISTER.md` lists the produced notes. |
 | vault validation | Links, filenames, frontmatter, tags, attachments, nesting depth, and indexer risks have been checked and recorded in `00_Meta/VAULT-AUDIT.md` when useful. |
 
 ## Workflow loop
@@ -73,9 +75,10 @@ Use the smallest tier that can satisfy the phase gate.
 
 1. Identify whether the user wants to create a new vault, update an existing vault, parse an existing vault, or audit/repair Obsidian compatibility.
 2. Identify the vault root and source locations. Sources may be PDFs, Markdown, text files, office documents converted to text, code repositories, API docs, notebooks, diagrams, meeting notes, or mixed folders.
-3. Inspect current vault conventions before writing. Check folder names, note naming, templates, frontmatter fields, aliases, tags, link style, attachment location, and `.obsidian/` settings when available.
-4. Ask one focused question only if the wrong assumption could cause overwritten notes, misplaced sources, incompatible link style, or a substantially different note granularity.
-5. Write or update `00_Meta/VAULT-MANIFEST.md` using [VAULT-MANIFEST-FORMAT.md](./VAULT-MANIFEST-FORMAT.md).
+3. If the user provides a target vault or knowledge base, use that directory as the write target for every output note. Do not create parallel notes outside the vault unless the user explicitly requests a separate export.
+4. Inspect current vault conventions before writing. Check folder names, note naming, templates, frontmatter fields, aliases, tags, link style, attachment location, and `.obsidian/` settings when available.
+5. Ask one focused question only if the wrong assumption could cause overwritten notes, misplaced sources, incompatible link style, or a substantially different note granularity.
+6. Write or update `00_Meta/VAULT-MANIFEST.md` using [VAULT-MANIFEST-FORMAT.md](./VAULT-MANIFEST-FORMAT.md).
 
 ### 1. Inventory sources
 
@@ -94,10 +97,11 @@ Use the smallest tier that can satisfy the phase gate.
 1. Choose note granularity by concept, not by source file. A single source can yield many notes; several sources can update one concept note.
 2. Prefer permanent notes for durable concepts, workflows, APIs, entities, algorithms, experimental findings, architecture decisions, and recurring terminology.
 3. Keep project-specific execution notes in `30_Projects/` and temporary import notes in `10_Fleeting/`.
-4. Define canonical note titles before writing. Titles should be unique, descriptive, and stable.
-5. Define aliases for acronyms, synonyms, old names, paper-specific terms, and code symbols that users or agents may search for later.
-6. Define tags sparingly. Use tags for broad retrieval facets, not as a replacement for links.
-7. Decide merge vs create:
+4. Define canonical note titles and vault-relative output paths before writing. Titles should be unique, descriptive, and stable.
+5. Define graph entry points for each note: related concept links, source links, project links, index/MOC links, or backlinks from existing notes.
+6. Define aliases for acronyms, synonyms, old names, paper-specific terms, and code symbols that users or agents may search for later.
+7. Define tags sparingly. Use tags for broad retrieval facets, not as a replacement for links.
+8. Decide merge vs create:
    - merge when an existing note covers the same concept and the new source adds evidence, nuance, or updated behavior;
    - create when the concept is distinct, the existing title would become overloaded, or source terminology needs a separate bridge note.
 
@@ -126,25 +130,28 @@ Use the smallest tier that can satisfy the phase gate.
 5. Record precise locators: section, heading, page, paragraph, line range, file path, function/class, commit, or test name.
 6. Mark uncertain or conflicting facts explicitly. Do not smooth contradictions into a false synthesis.
 
-### 4. Compose Obsidian notes
+### 4. Compose and integrate Obsidian notes
 
 1. Use [NOTE-FORMAT.md](./NOTE-FORMAT.md) for permanent notes.
-2. Put frontmatter first and keep it valid YAML.
-3. Use a concise opening definition or claim so the note is useful in preview and graph contexts.
-4. Link related concepts with WikiLinks on first meaningful mention.
-5. Add aliases for acronyms, alternate names, code symbols, and source-specific terminology.
-6. Keep notes focused. If a note grows beyond one concept or becomes difficult to scan, split it and link the parts.
-7. Prefer prose and compact tables over long pasted excerpts.
-8. Include short code snippets only when they explain an API, schema, invariant, or non-obvious mechanism. Cite the source path and line range.
-9. Add a `Source grounding` section for claims that may need verification later.
-10. Add `Open questions` only for material ambiguity that affects retrieval, interpretation, or future updates.
+2. Write notes to their planned vault-relative paths. If a target vault was provided, all output notes must be created or updated inside it.
+3. Put frontmatter first and keep it valid YAML.
+4. Use a concise opening definition or claim so the note is useful in preview and graph contexts.
+5. Link related concepts with WikiLinks on first meaningful mention.
+6. Add aliases for acronyms, alternate names, code symbols, and source-specific terminology.
+7. Keep notes focused. If a note grows beyond one concept or becomes difficult to scan, split it and link the parts.
+8. Prefer prose and compact tables over long pasted excerpts.
+9. Include short code snippets only when they explain an API, schema, invariant, or non-obvious mechanism. Cite the source path and line range.
+10. Add a `Source grounding` section for claims that may need verification later.
+11. Add `Open questions` only for material ambiguity that affects retrieval, interpretation, or future updates.
+12. Integrate each note into the vault graph by adding or updating relevant links in existing index, project, source, or related concept notes when such notes exist. If no natural entry point exists, create the smallest useful index or source note rather than leaving the note orphaned.
+13. Update `00_Meta/Sources/SOURCE-REGISTER.md` so each processed source lists the notes it produced or updated.
 
 ### 5. Update and maintain existing notes
 
 1. Before creating a note, search for existing titles, aliases, and backlinks that cover the concept.
 2. Preserve existing user-written content unless it is clearly obsolete, contradicted by newer source evidence, or duplicated by a cleaner integrated note.
 3. When updating, add source-backed changes in place rather than appending disconnected summaries.
-4. Update aliases, tags, backlinks, and source lists with the same change.
+4. Update aliases, tags, backlinks, source lists, and index/project references with the same change.
 5. If two notes overlap, recommend a merge only when both note purposes are redundant. Otherwise add bridge links explaining the distinction.
 6. Record major convention changes in `00_Meta/VAULT-MANIFEST.md`.
 
@@ -158,10 +165,12 @@ Run the narrowest available checks for the touched scope:
 4. Broken WikiLinks or links that resolve ambiguously.
 5. Missing aliases for common acronyms and source names.
 6. Orphan notes created by the workflow that should link into the graph.
-7. Attachments outside the configured attachments folder.
-8. Deeply nested folders beyond the vault convention.
-9. Large non-Markdown folders inside the vault that may slow the Obsidian indexer.
-10. Notes without source grounding when they contain technical, scientific, code, medical, legal, or factual claims.
+7. Processed sources missing produced-note entries in `SOURCE-REGISTER.md`.
+8. Generated notes written outside the target vault when a vault was provided.
+9. Attachments outside the configured attachments folder.
+10. Deeply nested folders beyond the vault convention.
+11. Large non-Markdown folders inside the vault that may slow the Obsidian indexer.
+12. Notes without source grounding when they contain technical, scientific, code, medical, legal, or factual claims.
 
 Record results in `00_Meta/VAULT-AUDIT.md` using [VAULT-AUDIT-FORMAT.md](./VAULT-AUDIT-FORMAT.md) when the task is more than a trivial edit.
 

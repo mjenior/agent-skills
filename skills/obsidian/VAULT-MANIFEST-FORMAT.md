@@ -44,6 +44,7 @@ updated: YYYY-MM-DD
 - Internal links: WikiLinks, using `[[Note Title]]` or `[[Note Title|display text]]`.
 - Path style: shortest unique link when possible.
 - Required backlinks: {rules for source notes, concept notes, project notes, code notes, or index notes}.
+- Graph entry points: {index/MOC notes, project notes, source notes, or hub notes that new notes should be linked from}.
 
 ## Frontmatter schema
 
@@ -80,6 +81,7 @@ Field rules:
 ## Source handling conventions
 
 - Source register path: `00_Meta/Sources/SOURCE-REGISTER.md`.
+- Generated note placement: `{20_Permanent/ for evergreen notes | 30_Projects/ for time-bound notes | existing convention}`.
 - Source files copied into vault: `{yes | no | only selected}`.
 - Large source files or code repositories: `{keep outside vault | keep but exclude from Obsidian indexing | user decision needed}`.
 - Provenance requirement: every factual, scientific, technical, or code behavior claim must cite a source ID and locator.

@@ -20,6 +20,7 @@ updated: YYYY-MM-DD
 - Files inspected: {number or paths}
 - Source register inspected: `{yes | no | partial}`
 - Manifest inspected: `{yes | no | partial}`
+- Target-vault placement checked: `{yes | no | not applicable}`
 
 ## Summary
 
@@ -30,13 +31,14 @@ updated: YYYY-MM-DD
 - Duplicate filenames: {number}
 - Frontmatter issues: {number}
 - Attachment issues: {number}
+- Integration issues: {number}
 - Indexer risks: {number}
 
 ## Findings
 
 ### Finding 1: {short title}
 
-- Category: {broken-link | ambiguous-link | duplicate-filename | invalid-frontmatter | tag-drift | missing-provenance | orphan-note | attachment-location | deep-nesting | indexer-risk | merge-candidate | other}
+- Category: {broken-link | ambiguous-link | duplicate-filename | invalid-frontmatter | tag-drift | missing-provenance | source-register-drift | orphan-note | outside-target-vault | attachment-location | deep-nesting | indexer-risk | merge-candidate | other}
 - Severity: {high | medium | low}
 - Location: `{note path, folder path, attachment path, or source path}`
 - Evidence: {specific observed issue}
@@ -62,6 +64,12 @@ updated: YYYY-MM-DD
 | path | issue | action |
 | --- | --- | --- |
 | `{path}` | `{duplicate filename | unsafe character | too deeply nested}` | {fix or flag} |
+
+## Integration validation
+
+| note or source | issue | action |
+| --- | --- | --- |
+| `{path or source id}` | `{outside target vault | orphan note | missing source-register produced-note entry | missing index/project link}` | {move with approval, link, update register, flag} |
 
 ## Attachment validation
 
