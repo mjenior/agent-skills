@@ -1,4 +1,4 @@
-# mr
+# write-mr
 
 Write a high-quality merge request title and description for the current branch. Ground the message in the branch's actual commits and code changes, not in assumptions or generic release-note phrasing.
 

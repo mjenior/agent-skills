@@ -7,6 +7,15 @@ Use this skill to create a high-quality meeting synthesis from a recording and a
 
 The final deliverable is a markdown file artifact, not a chat-only response, unless the user asks otherwise.
 
+## File identification
+
+Audio recordings and text notes follow specific timestamp-based naming conventions:
+
+- **Audio files**: `YYYYMMDDHHMMSS.WAV` format (e.g., `20260624140145.WAV` = 2026-06-24 at 14:01:45)
+- **Text notes**: `YYYYMMDD_HHMMSS.txt` format (e.g., `20260624_140001.txt` = 2026-06-24 at 14:00:01)
+
+The timestamps encode the collection time in military time. Corresponding audio and text files will have timestamps that are close but not necessarily identical. Use the date and approximate time to verify that files belong to the same meeting. If timestamps differ by more than a few minutes, confirm with the user that the files correspond to the same event.
+
 ## Source policy
 
 1. Treat the meeting recording or transcript as the primary evidence source.

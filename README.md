@@ -6,7 +6,7 @@ The content is oriented toward code review, debugging, planning, documentation s
 
 Many are my own creations, but a few are adapted or refactored from a couple different sources:
 
-- [teach & /handoff](https://github.com/mattpocock)
+- [teach](https://github.com/mattpocock)
 - [repo-explorer](https://github.com/t3dotgg)
 
 ## repository layout
@@ -23,7 +23,7 @@ Plain Markdown prompts intended for explicit slash command-style invocation. The
 - `/cleanup` - read-only audit for behavioral defects and unreachable code
 - `/investigate` - root-cause investigation from workflow errors and intermediate output
 - `/prompts` - audit of prompts, agent instructions, and model-facing text against actual behavior
-- `/test_audit` - test-suite audit for behavior coverage, reachability, isolation, and maintainability
+- `/test-audit` - test-suite audit for behavior coverage, reachability, isolation, and maintainability
 
 #### planning and implementation workflow
 
@@ -37,9 +37,9 @@ Plain Markdown prompts intended for explicit slash command-style invocation. The
 #### documentation and communication
 
 - `/annotate` - synchronize README files, docstrings, and code comments with implementation
-- `/handoff` - write a redacted temporary handoff document for a fresh agent, with artifact references and suggested skills
+- `/specsheet` - write a redacted temporary specsheet document for a fresh agent, with artifact references and suggested skills
 - `/humanize` - rewrite target text into natural, concise, human-sounding prose while preserving meaning
-- `/mr` - write a merge request title and description from actual branch history and diff
+- `/write-mr` - write a merge request title and description from actual branch history and diff
 
 #### repository execution workflow
 
@@ -69,7 +69,7 @@ System prompt text that defines the baseline agent behavior.
 
 - `pi.md` - a CLI-focused coding-agent policy emphasizing directness, minimal diffs, contract-first changes, deterministic verification, realistic testing, and cautious handling of destructive operations
 
-- `judge.md` - an LLM response-evaluation policy that scores a `TEST_RESPONSE` against an `INITIAL_PROMPT` and `REFERENCE_RESPONSE`, then returns strict JSON with per-criterion scores, a rounded composite score, and a one-paragraph review summary
+- `judge.md` - a corpus-grounded benchmark response-evaluation policy that scores a target LLM response against a `create-test-dataset` entry, including canonical answers, required facts, reasoning paths, source references, and known negative responses
 
 ### `workflows/`
 
@@ -79,10 +79,10 @@ Unlike basic slash-commands, workflows do not just tell one agent how to perform
 
 Current workflows:
 
-- `/create_test_dataset`
-  - Objective: generate a corpus-grounded benchmark dataset with adversarial JSON evaluation items.
+- `/create-test-dataset`
+  - Objective: generate a corpus-grounded benchmark dataset with adversarial JSON evaluation items, including plausible negative response examples for downstream judging.
   - Subagent use: an orchestrator analyzes the source corpus, builds the distribution matrix, assigns parallel item-generation batches to worker subagents, then aggregates and validates the final dataset.
-- `/unvibe_code_repo`
+- `/unvibe-code-repo`
   - Objective: convert a broad simplification audit into a reviewed, implemented, tested, committed, and PR-ready change.
   - Subagent use: a coordinator may use bounded audit scouts, plan reviewers, implementation workers, and confirmation reviewers, while retaining responsibility for evidence checks, integration decisions, verification, and branch operations.
 
@@ -122,7 +122,7 @@ A large portion of the library is aimed at software delivery tasks such as:
 
 Copy-paste prompts intended for associated web page tools rather than slash-command or skill invocation.
 
-- `notebook_lm` - NotebookLM audio overview prompt for neutral, structured, technically precise summaries of machine learning, AI architecture, and computational research papers
+- `podcast` - NotebookLM audio overview prompt for neutral, structured, technically precise summaries of machine learning, AI architecture, and computational research papers
 
 ## how to use this repo
 
@@ -142,7 +142,7 @@ Examples:
 - use `/audit` to review a branch or diff for contract drift and regressions
 - use `/agentify` to score a repository's agent readiness and identify structural friction for LLM coding agents
 - use `/annotate` to update docs and comments without changing executable code
-- use `/handoff` to save a redacted session summary outside the workspace for a fresh agent
+- use `/specsheet` to save a redacted session summary outside the workspace for a fresh agent or team of agents
 - use `/humanize` to rewrite text so it sounds natural, concise, and less generated
 - use `/yeet` only when you want the agent to drive the full commit and MR flow explicitly
 
