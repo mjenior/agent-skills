@@ -9,12 +9,16 @@ The final deliverable is a markdown file artifact, not a chat-only response, unl
 
 ## File identification
 
-Audio recordings and text notes follow specific timestamp-based naming conventions:
+Audio recordings and text notes follow specific timestamp-based naming conventions and are stored in designated directories:
 
 - **Audio files**: `YYYYMMDDHHMMSS.WAV` format (e.g., `20260624140145.WAV` = 2026-06-24 at 14:01:45)
+  - Default location: `/media/matt-jenior/USB-DISK/RECORD`
 - **Text notes**: `YYYYMMDD_HHMMSS.txt` format (e.g., `20260624_140001.txt` = 2026-06-24 at 14:00:01)
+  - Default location: `/home/matt-jenior/Desktop/notes`
 
 The timestamps encode the collection time in military time. Corresponding audio and text files will have timestamps that are close but not necessarily identical. Use the date and approximate time to verify that files belong to the same meeting. If timestamps differ by more than a few minutes, confirm with the user that the files correspond to the same event.
+
+Unless the user specifies different paths, look for files in these default directories.
 
 ## Source policy
 
