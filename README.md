@@ -71,6 +71,8 @@ System prompt text that defines the baseline agent behavior.
 
 - `judge.md` - a corpus-grounded benchmark response-evaluation policy that scores a target LLM response against a `create-test-dataset` entry, including canonical answers, required facts, reasoning paths, source references, known negative responses, and optional domain-specific context for specialized or novel corpus knowledge
 
+- `prompt_skeleton.md` - a reference guide for designing effective prompts for LLM-based agents, covering the core skeleton blocks (role, goal, rules, think, context, examples, audience, format), drift control for long chats, hybrid prompt styles, model alignment knobs, and ready-to-use templates for everyday and complex tasks
+
 ### `workflows/`
 
 End-to-end operating procedures for tasks that need more than a single command invocation. A workflow defines the objective, phase gates, subagent topology, model and thinking tiers, verification requirements, and stopping conditions for a long-running loop.
