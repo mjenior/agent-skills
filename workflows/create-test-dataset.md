@@ -16,7 +16,7 @@ To successfully execute this benchmark without quality degradation or truncation
 * **Primary Duty:** Execute Phase 1 & 2. Generate a strict distribution matrix. Assign batches to Tier 2 agents. Aggregate, validate, and normalize final outputs.
 
 ### 2. Tier 2: Item Generation Subagents (Parallel Workers)
-* **Model Class:** GPT-5.5 with low thinking, or Claude Haiku-4.5 with low thinking.
+* **Model Class:** GPT-5.5 with low thinking, or Claude Sonnet-4.6 with low thinking.
 * **Thinking/Reasoning Profile:** Fast inference.
 * **Parallel Workers:** 5 to 10 concurrent virtual instances.
 * **Primary Duty:** Consume a targeted item specification from the Orchestrator and output exactly 10-15 high-quality questions per batch according to a strict JSON schema.

@@ -51,7 +51,7 @@ Use the smallest model tier that can reliably complete the assigned phase. Escal
 | quick | Single-file or narrow local inspection, no public contracts, no data shape changes, no ambiguous reachability. | GPT-5.5 or Claude Haiku-4.5 | low | 1-3 files or less than 30 minutes expected work |
 | standard | Multiple related files, shared helpers, tests, or caller updates with clear ownership. | GPT-5.5 or Claude Sonnet-4.6 | medium | 4-12 files or 30-120 minutes expected work |
 | complex | Boundary contracts, public APIs, schemas, migrations, security, concurrency, generated code, framework discovery, or unclear reachability. | GPT-5.5 or Claude Opus-4.8 | high | More than 12 files, more than 2 hours expected work, or any high-risk boundary |
-| verifier | Independent review, plan critique, audit confirmation, or failure diagnosis. | GPT-5.5 or Claude Sonnet-4.6; use Claude Opus-4.8 for complex-tier review | medium by default, high for complex tier changes | Bounded to the reviewed artifact or diff |
+| verifier | Independent review, plan critique, audit confirmation, or failure diagnosis. | GPT-5.5 or Claude Opus-4.8 for complex-tier review | medium by default, high for complex tier changes | Bounded to the reviewed artifact or diff |
 
 Subagent defaults:
 
