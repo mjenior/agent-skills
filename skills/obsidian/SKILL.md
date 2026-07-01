@@ -1,6 +1,6 @@
 ---
 name: obsidian
-description: Create, update, audit, and parse Obsidian-compatible local knowledge bases from user-provided technical documents, non-technical documents, code collections, meeting summaries, and task-analysis outputs. Covers Obsidian Flavored Markdown syntax (wikilinks, embeds, callouts, block references, properties, tags), Bases (.base) index views, JSON Canvas (.canvas), and the Obsidian CLI.
+description: Create, update, audit, and parse Obsidian-compatible local knowledge bases from user-provided technical documents, non-technical documents, code collections, meeting summaries, and task-analysis outputs. Also captures user-expressed opinions and stances on in-scope topics as timestamped, append-only opinion notes. Covers Obsidian Flavored Markdown syntax (wikilinks, embeds, callouts, block references, properties, tags), Bases (.base) index views, JSON Canvas (.canvas), and the Obsidian CLI.
 argument-hint: "What documents, code, or vault should be converted or maintained?"
 ---
 
@@ -29,6 +29,7 @@ When creating a new vault, use this default structure unless the user provides a
 - `10_Fleeting/`: temporary triage notes, rough imports, and scratch work.
 - `20_Permanent/`: evergreen concept notes intended for long-term retrieval.
 - `30_Projects/`: project-specific or time-bound notes.
+- `40_Opinions/`: timestamped, append-only notes logging user-expressed opinions and stances on in-scope topics.
 
 Create files lazily as they become useful, always under the vault root:
 
@@ -36,6 +37,7 @@ Create files lazily as they become useful, always under the vault root:
 - `00_Meta/Sources/SOURCE-REGISTER.md`: source inventory, provenance, processing status, and extraction coverage. Use [SOURCE-REGISTER-FORMAT.md](./SOURCE-REGISTER-FORMAT.md).
 - `00_Meta/VAULT-AUDIT.md`: validation findings for filenames, links, frontmatter, tags, attachments, duplicates, and indexer risks. Use [VAULT-AUDIT-FORMAT.md](./VAULT-AUDIT-FORMAT.md).
 - Permanent notes under `20_Permanent/`: evergreen, source-grounded Markdown notes. Use [NOTE-FORMAT.md](./NOTE-FORMAT.md).
+- Opinion notes under `40_Opinions/`: timestamped, append-only records of user-expressed opinions on in-scope topics. Use [OPINION-FORMAT.md](./OPINION-FORMAT.md).
 - Project notes, meeting notes, task analyses, or generated summary artifacts under the appropriate existing vault folder, or under `30_Projects/` when they are time-bound rather than evergreen.
 - Task-analysis outputs from the `tasks` skill under `30_Projects/Task Reviews/` by default when no existing daily-note, review, or productivity folder convention exists.
 
@@ -53,8 +55,20 @@ Create files lazily as they become useful, always under the vault root:
 - Centralize attachments under `00_Meta/Attachments/` unless the vault already has a configured attachment folder.
 - Do not dump entire long documents or source files into permanent notes. Extract stable concepts, claims, APIs, workflows, definitions, and decision-relevant relationships.
 - Keep source provenance explicit. Every important note should identify the source document, code path, section, page, line range, commit, or other locator that supports it.
+- Keep the user's subjective opinions separate from source-grounded facts. Record opinions only as attributed, timestamped opinion notes ([OPINION-FORMAT.md](./OPINION-FORMAT.md)); never merge them into a permanent note's `Source grounding` or present them as vault fact.
 - For code collections, create human-readable concept, architecture, API, and workflow notes. Avoid copying large code blocks; use short snippets only when they clarify a stable interface or non-obvious mechanism.
 - For task-analysis outputs, preserve the generated daily, weekly, monthly, or annual analysis as a time-bound artifact; extract only durable planning principles, recurring patterns, or project-relevant commitments into permanent notes when they are useful beyond the reviewed period.
+
+## Opinion capture
+
+While working with the user's vault, watch for opinions the user expresses on topics the knowledge base covers — directly ("I think X is the wrong tool") or indirectly (a preference, ranking, complaint, or value judgment that bears on an in-scope topic). When one arises, log it as a timestamped opinion note under `40_Opinions/` using [OPINION-FORMAT.md](./OPINION-FORMAT.md), link it to the subject topic note, and record it append-only so the temporal record of the user's evolving views is preserved.
+
+- Resolve the opinion's `subject` to an existing topic note via titles, aliases, and tags. If the topic is clearly implied but has no note, create a minimal stub or hold the opinion in `10_Fleeting/`; do not force an unrelated link.
+- When the user's view on a topic changes, write a new note that supersedes the prior one rather than editing history. Never fold an opinion into a source-grounded note or a `Source grounding` table.
+- Log only opinions that bear on in-scope topics. Skip passing remarks, task instructions, and opinions unrelated to the knowledge base.
+- Because logging a personal opinion is sensitive, tell the user the first time you record one in a session and honor any request to stop, exclude a topic, or keep a remark off the record.
+
+Activation limit: this behavior applies while this skill is active on a vault task. It does not make opinion capture ambient across every conversation or session. For always-on capture regardless of whether the skill is invoked, the user must also add a directive to their `CLAUDE.md` or persistent memory (a shell hook cannot detect opinions semantically). Recommend this when the user wants capture to persist beyond skill-scoped work.
 
 ## When to ask before proceeding
 

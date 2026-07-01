@@ -31,6 +31,7 @@ updated: YYYY-MM-DD
 | `10_Fleeting/` | Temporary notes, scratch imports, and triage. | {retention or cleanup rule} |
 | `20_Permanent/` | Evergreen concept notes. | {domain subfolders if used} |
 | `30_Projects/` | Time-bound or project-specific notes. | {project naming rule} |
+| `40_Opinions/` | Timestamped, append-only notes logging user-expressed opinions on in-scope topics. | {opinion-capture convention, or `not used`} |
 
 ## Naming rules
 
@@ -73,6 +74,35 @@ Field rules:
 - `sources`: array of source IDs from `00_Meta/Sources/SOURCE-REGISTER.md`.
 - `status`: controlled vocabulary for note maturity.
 - Property typing: keep properties typed (text, number, checkbox, date `YYYY-MM-DD`, date-time, list/array, link `"[[Note]]"`) so notes are queryable by Bases and Dataview. Record any vault-specific custom properties and their types here.
+
+## Opinion-capture conventions
+
+- Opinion folder: `40_Opinions/` unless overridden here.
+- Capture posture: `{log automatically while the skill is active | confirm before logging | disabled}`.
+- Cross-session capture: `{CLAUDE.md/memory directive present | skill-scoped only}`. Ambient capture across all sessions requires a `CLAUDE.md` or memory directive; the skill alone only captures while active on a vault task.
+- Opinion frontmatter schema ([OPINION-FORMAT.md](./OPINION-FORMAT.md)):
+
+```yaml
+---
+id: YYYYMMDDHHMMSS-slug
+title: "Opinion: {short paraphrase}"
+type: opinion
+subject: "[[Topic Note]]"
+topics: []
+stance: "{one-line paraphrase}"
+polarity: favorable | critical | mixed | neutral
+confidence: tentative | held | strong
+origin: conversation
+expressed: YYYY-MM-DDTHH:mm:ss
+status: current | superseded | withdrawn
+supersedes: "[[Opinion: earlier stance]]"
+tags: [opinion]
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+---
+```
+
+- Rules: append-only (a changed view is a new note that supersedes the prior one); at most one `current` note per `subject`; `expressed` is a typed `date-time`; opinions are never recorded in a permanent note's `Source grounding` or presented as fact.
 
 ## Attachment conventions
 

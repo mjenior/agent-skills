@@ -32,13 +32,14 @@ updated: YYYY-MM-DD
 - Frontmatter issues: {number}
 - Attachment issues: {number}
 - Integration issues: {number}
+- Opinion-integrity issues: {number}
 - Indexer risks: {number}
 
 ## Findings
 
 ### Finding 1: {short title}
 
-- Category: {broken-link | ambiguous-link | duplicate-filename | invalid-frontmatter | untyped-property | tag-drift | missing-provenance | source-register-drift | task-analysis-integration | orphan-note | outside-target-vault | attachment-location | deep-nesting | indexer-risk | merge-candidate | base-error | canvas-error | other}
+- Category: {broken-link | ambiguous-link | duplicate-filename | invalid-frontmatter | untyped-property | tag-drift | missing-provenance | source-register-drift | task-analysis-integration | orphan-note | outside-target-vault | attachment-location | deep-nesting | indexer-risk | merge-candidate | base-error | canvas-error | opinion-integrity | other}
 - Severity: {high | medium | low}
 - Location: `{note path, folder path, attachment path, or source path}`
 - Evidence: {specific observed issue}
@@ -70,6 +71,12 @@ updated: YYYY-MM-DD
 | note or source | issue | action |
 | --- | --- | --- |
 | `{path or source id}` | `{outside target vault | orphan note | missing source-register produced-note entry | missing index/project link | missing task-review index link | missing task-analysis period metadata}` | {move with approval, link, update register, add frontmatter, flag} |
+
+## Opinion validation
+
+| opinion note | issue | action |
+| --- | --- | --- |
+| `40_Opinions/{path}` | `{missing expressed timestamp | missing origin | unresolved or missing subject link | multiple current opinions for one subject | broken supersedes chain | opinion in a Source grounding table | opinion presented as fact}` | {add metadata, resolve subject, mark superseded, move out of grounding, flag} |
 
 ## Attachment validation
 
